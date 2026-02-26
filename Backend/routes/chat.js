@@ -67,40 +67,49 @@ router.delete("/thread/:threadId", async (req, res) => {
     }
 });
 
-router.post("/chat", async(req, res) => {
-    const {threadId, message} = req.body;
+router.post("/chat", async (req, res) => {
 
-    if(!threadId || !message) {
-        res.status(400).json({error: "missing required fields"});
+    const { threadId, message } = req.body;
+
+    if (!threadId || !message) {
+        return res.status(400).json({ error: "Missing required fields" });
     }
 
     try {
-        let thread = await Thread.findOne({threadId});
-
-        if(!thread) {
-            //create a new thread in Db
-            thread = new Thread({
-                threadId,
-                title: message,
-                messages: [{role: "user", content: message}]
-            });
-        } else {
-            thread.messages.push({role: "user", content: message});
-        }
 
         const assistantReply = await getOpenAIAPIResponse(message);
 
-        thread.messages.push({role: "assistant", content: assistantReply});
-        thread.updatedAt = new Date();
+        await Thread.findOneAndUpdate(
+            { threadId },
+            {
+                $setOnInsert: {
+                    threadId,
+                    title: message,
+                    createdAt: new Date()
+                },
+                $push: {
+                    messages: {
+                        $each: [
+                            { role: "user", content: message },
+                            { role: "assistant", content: assistantReply }
+                        ]
+                    }
+                },
+                $set: {
+                    updatedAt: new Date()
+                }
+            },
+            { upsert: true, new: true }
+        );
 
-        await thread.save();
-        res.json({reply: assistantReply});
-    } catch(err) {
-        console.log(err);
-        res.status(500).json({error: "something went wrong"});
+        res.json({ reply: assistantReply });
+
+    } catch (err) {
+        console.log("Chat Error:", err);
+        res.status(500).json({ error: "something went wrong" });
     }
-});
 
+});
 
 
 
