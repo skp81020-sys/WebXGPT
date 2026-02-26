@@ -3,7 +3,7 @@ import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
 import { useContext, useState, useEffect } from "react";
 import {ScaleLoader} from "react-spinners";
-
+const API = "https://webxgpt-backend.onrender.com";
 function ChatWindow() {
     const {prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat} = useContext(MyContext);
     const [loading, setLoading] = useState(false);
@@ -97,5 +97,6 @@ function ChatWindow() {
         </div>
     )
 }
+
 
 export default ChatWindow;
