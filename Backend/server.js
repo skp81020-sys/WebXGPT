@@ -9,9 +9,13 @@ const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(cors({
- origin:"*",
- methods:["GET","POST"]
+  origin: "*",
+  methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+// IMPORTANT for preflight
+app.options("*", cors());
 
 app.use("/api", chatRoutes);
 
