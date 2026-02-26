@@ -38,9 +38,9 @@ router.get("/thread/:threadId", async(req, res) => {
     try {
         const thread = await Thread.findOne({threadId});
 
-        if(!thread) {
-            res.status(404).json({error: "Thread not found"});
-        }
+        if(!thread){
+ return res.status(404).json({error:"Thread not found"});
+}
 
         res.json(thread.messages);
     } catch(err) {
