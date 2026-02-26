@@ -14,9 +14,7 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-// IMPORTANT for preflight
-app.options("*", cors());
-
+ 
 app.use("/api", chatRoutes);
 
 app.listen(PORT, () => {
