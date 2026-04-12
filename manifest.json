@@ -1,0 +1,30 @@
+{
+  "background_color": "#131212",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "web-xgpt.vercel",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "WebXgpt",
+  "start_url": "/",
+  "theme_color": "#acc37a",
+  "icons": [
+    {
+      "src": "https://web-xgpt.vercel.app/vite.svg",
+      "type": "image/svg+xml",
+      "isSquare": false,
+      "isPng": false,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 0,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    }
+  ],
+  "id": "WebXgpt",
+  "description": "This is chatgpt replika",
+  "categories": [
+    "education"
+  ]
+}
